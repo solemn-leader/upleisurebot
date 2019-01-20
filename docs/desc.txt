@@ -1,0 +1,11 @@
+			TECH?
+	Build create a public and build a bot for vk.com. Then we advertise this via vk-ads. We shall deploy bot via heroku. We shall use either hobby dyno($7(500Rub)/m) or standard 1x dyno(25$(1750Rub)/m)
+
+			METRICS?
+	What metrics we shall gather. Number of people who wrote to bot, n of people who took part in core interaction.s
+
+			WHAT IT IS?
+	It is a service to find a companion for event visiting.
+
+			WHAT WILL BOT DO?   
+	Bot will match people who write(who want to go somewhere) to him. Users will have opportunities to leave an suggestion to go somewhere and see other people's suggestion.
