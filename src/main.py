@@ -1,21 +1,9 @@
 import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
-from vk_api.utils import get_random_id
-import access_token
+from access_token import TOKEN
+from helpers import *
 
-API = vk_api.VkApi(token=access_token.TOKEN)
-
-
-def write_msg(user_id, message):
-    global API
-    API.method(
-        'messages.send', 
-        {
-            'user_id': user_id, 
-            'message': message, 
-            'random_id': get_random_id()
-        }
-    )
+API = vk_api.VkApi(token=TOKEN)
 
 
 def main():
@@ -24,10 +12,8 @@ def main():
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
-                request = event.text
-                if request == "привет":
-                    write_msg(event.user_id, "Хай")
-                elif request == "пока":
-                    write_msg(event.user_id, "Пока((")
-                else:
-                    write_msg(event.user_id, "Не поняла вашего ответа...", )
+                write_msg(API, event.user_id, "Не поняла вашего ответа...", )
+
+
+if __name__ == "__main__":
+    main()

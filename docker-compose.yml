@@ -1,0 +1,22 @@
+# local deployment settings
+version: '3'
+
+services:
+  bot_db:
+    image: postgres:latest
+    ports:
+      - "5432:5432"
+    container_name: bot_db
+  bot:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    command: python src/main.py
+    volumes:
+      - .:/bot
+    ports:
+      - "8000:8000"
+    depends_on:
+      - bot_db
+    env_file: .env
+    container_name: bot
