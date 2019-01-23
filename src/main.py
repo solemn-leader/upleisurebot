@@ -12,7 +12,12 @@ def main():
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
-                write_msg(API, event.user_id, "Не поняла вашего ответа...", )
+                print(event.__dict__)
+                write_msg(
+                    API, 
+                    event.user_id, 
+                    "В воздухе налик! Еще за пачкой? Погнали!"
+                )
 
 
 if __name__ == "__main__":
