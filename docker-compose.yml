@@ -18,5 +18,6 @@ services:
       - "8000:8000"
     depends_on:
       - bot_db
-    env_file: .env
+    env_file: 
+      - docker.env
     container_name: bot

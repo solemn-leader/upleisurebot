@@ -1,23 +1,15 @@
-import vk_api
 from vk_api.longpoll import VkLongPoll, VkEventType
-from access_token import TOKEN
-from helpers import *
-
-API = vk_api.VkApi(token=TOKEN)
+from helpers import make_bot_response, API
+import os
 
 
 def main():
-    global API
     longpoll = VkLongPoll(API)
+    print("STARTED")
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:
             if event.to_me:
-                print(event.__dict__)
-                write_msg(
-                    API, 
-                    event.user_id, 
-                    "В воздухе налик! Еще за пачкой? Погнали!"
-                )
+                make_bot_response(event)
 
 
 if __name__ == "__main__":

@@ -6,10 +6,11 @@ if os.environ.get("DEPLOYED_LOCALLY", False):
     db = PostgresqlExtDatabase(
         'postgres',
         user='postgres',
-        host='db',
+        host='bot_db',
         port=5432,
+        sslmode='disable'
     )
 else:
     db = connect(
-        connect(os.environ.get('DATABASE_URL'))
+        (os.environ.get('DATABASE_URL'))
     )
