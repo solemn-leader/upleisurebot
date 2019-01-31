@@ -2,12 +2,12 @@
 from db import db
 from peewee import *
 import os
-from consts import CHAT_STATUSES
+from consts import ChatStatuses
 
 
 class User(Model):
     name = CharField()
-    pk = CharField()  # user's id
+    pk = IntegerField()  # user's vk id
     chat_status = IntegerField()
 
     class Meta:
