@@ -1,5 +1,5 @@
 from vk_api.longpoll import VkLongPoll, VkEventType
-from helpers import make_bot_response, API
+from bot import make_bot_response, API
 import os
 
 

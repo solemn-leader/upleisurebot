@@ -2,6 +2,7 @@
 from db import db
 from peewee import *
 import os
+from consts import CHAT_STATUSES
 
 
 class User(Model):
