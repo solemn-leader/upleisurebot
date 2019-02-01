@@ -19,6 +19,10 @@ class Event(Model):
         User,
         related_name='events'
         )
+    
+    city = CharField()  # user must have city set
+
+    age_group = IntegerField()  # user must have age set
 
     class Meta:
         database = db

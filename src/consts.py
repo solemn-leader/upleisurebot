@@ -9,6 +9,22 @@ class ChatStatuses:
 
     SELECTS_WHAT_TO_DO = 4
 
+    USER_MUST_SET_CITY_OR_AGE = 5
+
+
+class AgeGroups:
+    TEENS = 0
+    TEENS_BOUNDS = (1, 17)
+    YOUNG = 1
+    YOUNG_BOUNDS = (18, 80)
+
+    @staticmethod
+    def get_age_group(age: int) -> int:
+        if AgeGroups.TEENS_BOUNDS[0] <= age <= AgeGroups.TEENS_BOUNDS[1]:
+            return AgeGroups.TEENS
+        else:
+            return AgeGroups.YOUNG
+
 
 PEOPLE_WHO_ARE_ALLOWED_TO_WRITE = [
     210045485

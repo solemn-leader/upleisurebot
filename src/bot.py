@@ -5,6 +5,7 @@ from access_token import TOKEN
 import vk_api
 from consts import *
 from get_response import *
+from helpers import *
 
 API = vk_api.VkApi(token=TOKEN)
 
@@ -41,19 +42,24 @@ def __handle_event(text, attachments, user_id) -> (str, str, str):
     )
 
 
-def __get_random_id():
-    return random.getrandbits(31) * random.choice([-1, 1])
-
-
-def __get_user_name(user_id) -> str:
-    '''returns vk user name by vk id'''
+def __get_user_info(user_id) -> (str, str, int):
+    '''returns vk full name, city, and age by vk id'''
     user = API.method(
         'users.get',
         {
             'user_ids': user_id
         }
     )[0]
-    return user['first_name'] + ' ' + user['last_name']
+    name = user['first_name'] + ' ' + user['last_name']
+    if 'city' not in user.keys():  # user has not set city
+        city = ''
+    else:
+        city = user['city']['title']
+    if 'bdate' not in user.keys():  # user has not set city
+        age = -1
+    else:
+        age = get_age_from_birth(user['bdate'])
+    return (name, city, age)
 
 
 def __write_msg(user_id, text, attachments='photo-36147615_456275469'):
@@ -63,7 +69,7 @@ def __write_msg(user_id, text, attachments='photo-36147615_456275469'):
         {
             'user_id': user_id,
             'message': text,
-            'random_id': __get_random_id(),
+            'random_id': get_random_id(),
             'attachment': attachments
         }
     )
@@ -73,7 +79,10 @@ def __get_chat_status(event: Event) -> int:
     if User.select().where(User.pk == event.user_id).exists():
         return User.get(User.pk == event.user_id).chat_status
     else:
-        __create_new_user(event.user_id, __get_user_name(event.user_id))
+        user_date = __get_user_info(event.user_id)
+        if ('' in user_date) or (-1 in user_date):
+            return ChatStatuses.USER_MUST_SET_CITY_OR_AGE
+        __create_new_user(event.user_id, *__get_user_info(event.user_id))
         return ChatStatuses.JUST_STARTED
 
 
@@ -82,11 +91,13 @@ def __set_chat_status(event: Event, new_status: int):
         .where(User.pk == event.user_id).execute()
 
 
-def __create_new_user(user_id, name) -> User:
+def __create_new_user(user_id, name, city, age) -> User:
     return User.create(
         pk=user_id,
         name=name,
-        chat_status=ChatStatuses.SELECTS_WHAT_TO_DO
+        chat_status=ChatStatuses.SELECTS_WHAT_TO_DO,
+        city=city,
+        age=AgeGroups.get_age_group(age)
     )
 
 
@@ -134,7 +145,8 @@ def __what_should_bot_respond(event: Event) -> (str, str):
     messages.append((response_text, attachments))
     # if user reply was valid and it was not first message
     if (response_text != DID_NOT_GET_IT_MESSAGE) and \
-       (chat_status != ChatStatuses.JUST_STARTED):
+       (chat_status != ChatStatuses.JUST_STARTED) and \
+       (chat_status != ChatStatuses.USER_MUST_SET_CITY_OR_AGE):
         if new_chat_status == ChatStatuses.SEEN_EVENT:
             if False:  # here we should check if there are events to show
                 pass  # otherwise we should set SELECT WHAT TO DO
