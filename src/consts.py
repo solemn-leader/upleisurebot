@@ -30,6 +30,10 @@ PEOPLE_WHO_ARE_ALLOWED_TO_WRITE = [
     210045485
 ]
 
+USER_MUST_SET_CITY_OR_AGE_MESSAGE = '''Упс :( чтобы пользоваться ботом нужно указать в профиле
+город и возраст
+'''
+
 DID_NOT_GET_IT_MESSAGE = 'Извиняюсь, не совсем понял вас.'
 
 SEND_EVENT_MESSAGE = '''Окей, отправь мне описание события, и фоточки.

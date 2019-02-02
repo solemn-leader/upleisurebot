@@ -1,16 +1,7 @@
 from access_token import TOKEN
 import vk_api
-from helpers import get_age_from_birth
+from helpers import get_random_id
 
 API = vk_api.VkApi(token=TOKEN)
-# print(
-#     API.method(
-#         'users.get',
-#         {
-#             'user_ids': '262057646',
-#             'fields': 'city, bdate'
-#         }
-#     )
-# )
 
-print(get_age_from_birth('1.1.2000'))
+print(get_random_id())

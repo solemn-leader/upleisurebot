@@ -87,8 +87,9 @@ def __get_chat_status(event: Event) -> int:
 
 
 def __set_chat_status(event: Event, new_status: int):
-    User.update({User.chat_status: new_status}) \
-        .where(User.pk == event.user_id).execute()
+    if new_status != -1:  # if status is -1 we must not set it
+        User.update({User.chat_status: new_status}) \
+            .where(User.pk == event.user_id).execute()
 
 
 def __create_new_user(user_id, name, city, age) -> User:
@@ -137,7 +138,9 @@ def __what_should_bot_respond(event: Event) -> (str, str):
                 user_reply,
                 event.user_id
             )
-
+    elif chat_status == ChatStatuses.USER_MUST_SET_CITY_OR_AGE:
+        response_text, attachments,\
+            new_chat_status = get_response_user_must_set_city_or_age()
     else:
         response_text = 'Я забыл, о чем мы говорили :('
         attachments = ''
@@ -148,7 +151,7 @@ def __what_should_bot_respond(event: Event) -> (str, str):
        (chat_status != ChatStatuses.JUST_STARTED) and \
        (chat_status != ChatStatuses.USER_MUST_SET_CITY_OR_AGE):
         if new_chat_status == ChatStatuses.SEEN_EVENT:
-            if False:  # here we should check if there are events to show
+            if False:  # here we should check there is passed event in messages
                 pass  # otherwise we should set SELECT WHAT TO DO
             else:
                 messages.append((MAKE_SEEN_EVENT_CHOICES_MESSAGE, ''))

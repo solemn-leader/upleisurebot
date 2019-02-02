@@ -9,6 +9,7 @@ class User(Model):
     name = CharField()
     pk = IntegerField()  # user's vk id
     chat_status = IntegerField()
+    last_seen_event = ForeignKeyField("Event")
 
     class Meta:
         database = db
