@@ -76,8 +76,8 @@ def __write_msg(user_id, text, attachments='photo-36147615_456275469'):
 
 
 def __get_chat_status(event: Event) -> int:
-    if User.select().where(User.pk == event.user_id).exists():
-        return User.get(User.pk == event.user_id).chat_status
+    if User.select().where(User.user_id == event.user_id).exists():
+        return User.get(User.user_id == event.user_id).chat_status
     else:
         user_date = __get_user_info(event.user_id)
         if ('' in user_date) or (-1 in user_date):
@@ -94,7 +94,7 @@ def __set_chat_status(event: Event, new_status: int):
 
 def __create_new_user(user_id, name, city, age) -> User:
     return User.create(
-        pk=user_id,
+        user_id=user_id,
         name=name,
         chat_status=ChatStatuses.SELECTS_WHAT_TO_DO,
         city=city,
