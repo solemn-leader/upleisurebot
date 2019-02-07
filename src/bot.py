@@ -203,11 +203,12 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
             messages.append((SELECT_WHAT_TO_DO_CHOICES_MESSAGE, ''))
 
         __set_chat_status(event.user_id, new_chat_status)
-    
+
     return messages
 
 
 def make_bot_response(event: Event):
+    '''this function makes bot respond!'''
     if event.user_id in PEOPLE_WHO_ARE_ALLOWED_TO_WRITE:
         for text, attachments in __what_should_bot_respond(event):
             __write_msg(

@@ -2,12 +2,13 @@ from vk_api.longpoll import VkLongPoll, VkEventType
 from bot import make_bot_response, API
 import os
 from models import create_tables
-from backg_tasks import *
+from backg_tasks import DBCleanUp
+from consts import CLEAN_UP_INTERVAL
 
 
 def main():
     longpoll = VkLongPoll(API)
-    clean_up = DBCleanUp()
+    clean_up = DBCleanUp(CLEAN_UP_INTERVAL)
     create_tables()
     print("STARTED")
     for event in longpoll.listen():

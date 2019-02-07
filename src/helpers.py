@@ -35,13 +35,15 @@ def get_event_for_user(user_id) -> (str, str):
         event_class = TeenEvent
     else:
         event_class = YoungEvent
-    # we must choose the max event_pk user has seen
+    # we find the closest event which user has not seen
+    # and which is still active
     event = event_class.get_or_none(
         event_class.pk > last_seen_event_pk,
         event_class.time_published +
-        N_OF_TIME_EVENT_REMAINS_ACTIVE < datetime.utcnow(),
-        event_class.owner != user)
-    if event:
+        N_OF_TIME_EVENT_REMAINS_ACTIVE > datetime.utcnow(),
+        event_class.owner != user,
+        event_class.city == user.city)
+    if event:  # we find such event
         User.update(last_seen_event_pk=event.pk).where(User.user_id == user_id)
         return (event.description, event.attachments)
     else:  # no events to show

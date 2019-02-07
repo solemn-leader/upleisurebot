@@ -66,7 +66,7 @@ def get_response_seen_event(user_choice, user_id) -> (str, str, int):
 def get_response_selected_what_to_do(user_choice, user_id) -> (str, str, int):
     '''user has selected what to do'''
     if (not user_choice.isdigit()) or \
-       (int(user_choice) not in SELECT_WHAT_TO_DO_CHOICES.values()):  
+       (int(user_choice) not in SELECT_WHAT_TO_DO_CHOICES.values()):
         # user input is invalid
         return (DID_NOT_GET_IT_MESSAGE, '', '')
 
