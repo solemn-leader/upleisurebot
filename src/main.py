@@ -8,8 +8,8 @@ from consts import CLEAN_UP_INTERVAL
 
 def main():
     longpoll = VkLongPoll(API)
-    clean_up = DBCleanUp(CLEAN_UP_INTERVAL)
     create_tables()
+    clean_up = DBCleanUp(CLEAN_UP_INTERVAL)
     print("STARTED")
     for event in longpoll.listen():
         if event.type == VkEventType.MESSAGE_NEW:

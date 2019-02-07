@@ -25,8 +25,8 @@ class DBCleanUp(object):
         """ Method that runs forever """
         while True:
             # all the logic happens here
-            YoungEvent.delete() .where(YoungEvent.time_published +
+            YoungEvent.delete().where(YoungEvent.time_published +
                                        N_OF_TIME_EVENT_REMAINS_UNDELETED <= datetime.utcnow()).execute()
-            TeenEvent.delete() .where(TeenEvent.time_published +
+            TeenEvent.delete().where(TeenEvent.time_published +
                                       N_OF_TIME_EVENT_REMAINS_UNDELETED <= datetime.utcnow()).execute()
             time.sleep(self.interval)
