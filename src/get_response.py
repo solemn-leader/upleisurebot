@@ -1,11 +1,15 @@
 from consts import *
-from helpers import get_event_for_user
+from helpers import (
+    get_event_for_user, 
+    user_liked_event_get_response
+)
 
 '''All funcs starting with 'get_rseponse'
 return message, attachments and new chat_status'''
 
 
 def get_response_just_started() -> (str, str, int):
+    '''when user has just started chat'''
     message = SELECT_WHAT_TO_DO_CHOICES_MESSAGE
     attachments = ''
     new_chat_status = ChatStatuses.SELECTS_WHAT_TO_DO
@@ -13,28 +17,36 @@ def get_response_just_started() -> (str, str, int):
 
 
 def get_response_seen_event(user_choice, user_id) -> (str, str, int):
+    '''user has seen event and has made his choice'''
     if (not user_choice.isdigit()) or \
        (int(user_choice) not in SEEN_EVENT_CHOICES.values()):
+        # user input is invalid
         return (
             DID_NOT_GET_IT_MESSAGE,
             '',
             -1
         )
+
     else:
         user_choice = int(user_choice)
         if user_choice == SEEN_EVENT_CHOICES['Мне нравится это предложение!']:
+            message, attachments = user_liked_event_get_response(user_id)
             return (
-                "Тебе понравилось это предложение!",
-                '',
+                message,
+                attachments,
                 ChatStatuses.SELECTS_WHAT_TO_DO
-            )  # here we should return probably id of man whose message it is
+            )
 
         elif user_choice == SEEN_EVENT_CHOICES['Покажи мне другое']:
+            message, attachments = get_event_for_user(user_id)
+            if (message == '') and (attachments == ''):
+                # if no event notify user
+                message = NO_EVENTS_MESSAGE
             return (
-                'Ты хочешь посмотреть другое предложение!',
-                '',
+                message,
+                attachments,
                 ChatStatuses.SEEN_EVENT
-            )  # here we should return another event desc
+            )
 
         elif user_choice == SEEN_EVENT_CHOICES['Хочу оставить заявку']:
             return (
@@ -52,17 +64,21 @@ def get_response_seen_event(user_choice, user_id) -> (str, str, int):
 
 
 def get_response_selected_what_to_do(user_choice, user_id) -> (str, str, int):
+    '''user has selected what to do'''
     if (not user_choice.isdigit()) or \
-       (int(user_choice) not in SELECT_WHAT_TO_DO_CHOICES.values()):
+       (int(user_choice) not in SELECT_WHAT_TO_DO_CHOICES.values()):  
+        # user input is invalid
         return (DID_NOT_GET_IT_MESSAGE, '', '')
+
     else:
         user_choice = int(user_choice)
         if user_choice == SELECT_WHAT_TO_DO_CHOICES['Смотреть заявки других']:
+            message, attachments = get_event_for_user(user_id)
             return (
-                "Ты выбрал смотреть завки других",
-                '',
+                message,
+                attachments,
                 ChatStatuses.SEEN_EVENT
-            )  # here we must return event desc
+            )
 
         elif user_choice == SELECT_WHAT_TO_DO_CHOICES['Оставить заявку']:
             return (
@@ -80,6 +96,7 @@ def get_response_selected_what_to_do(user_choice, user_id) -> (str, str, int):
 
 
 def get_response_user_must_set_city_or_age() -> (str, str, int):
+    '''call this func when user has no city or age on vk'''
     message = USER_MUST_SET_CITY_OR_AGE_MESSAGE
     attachments = ''
     new_chat_status = -1
