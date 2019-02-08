@@ -10,7 +10,7 @@ return message, attachments and new chat_status'''
 
 def get_response_just_started() -> (str, str, int):
     '''when user has just started chat'''
-    message = SELECT_WHAT_TO_DO_CHOICES_MESSAGE
+    message = INITIAL_MESSAGE
     attachments = ''
     new_chat_status = ChatStatuses.SELECTS_WHAT_TO_DO
     return (message, attachments, new_chat_status)

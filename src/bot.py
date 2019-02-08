@@ -183,11 +183,10 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
 
     messages.append((response_text, attachments))
 
-    # if user reply was valid, it was not first message and
+    # if user reply was valid and
     # his profile is valid we might also set new chat status
     # and send some more messages
     if (response_text != DID_NOT_GET_IT_MESSAGE) and \
-       (chat_status != ChatStatuses.JUST_STARTED) and \
        (chat_status != ChatStatuses.USER_MUST_SET_CITY_OR_AGE):
 
         if new_chat_status == ChatStatuses.SEEN_EVENT:
@@ -202,8 +201,10 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
                 # otherwise we must also send choices for user for this event
                 messages.append((MAKE_SEEN_EVENT_CHOICES_MESSAGE, ''))
 
-        elif new_chat_status == ChatStatuses.SELECTS_WHAT_TO_DO:
+        elif new_chat_status in (ChatStatuses.JUST_STARTED,
+                                 ChatStatuses.SELECTS_WHAT_TO_DO):
             messages.append((SELECT_WHAT_TO_DO_CHOICES_MESSAGE, ''))
+
         __set_chat_status(event.user_id, new_chat_status)
 
     return messages
