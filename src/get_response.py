@@ -39,9 +39,6 @@ def get_response_seen_event(user_choice, user_id) -> (str, str, int):
 
         elif user_choice == SEEN_EVENT_CHOICES['Покажи мне другое']:
             message, attachments = get_event_for_user(user_id)
-            if (message == '') and (attachments == ''):
-                # if no event notify user
-                message = NO_EVENTS_MESSAGE
             return (
                 message,
                 attachments,

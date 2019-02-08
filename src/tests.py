@@ -1,7 +1,16 @@
 from access_token import TOKEN
 import vk_api
-from helpers import get_random_id
+import unittest
+from consts import MY_ID
+import random
 
 API = vk_api.VkApi(token=TOKEN)
 
-print(get_random_id())
+
+class TestNothing(unittest.TestCase):
+    def test_nothing(self):
+        self.assertEqual(True, False)
+
+
+if __name__ == '__main__':
+    unittest.main()

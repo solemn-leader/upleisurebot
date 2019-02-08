@@ -17,7 +17,7 @@ class Event(Model):
     owner = DeferredForeignKey(
         'User',
         related_name='events',
-        to_field='user_id'
+        to_field='pk'
         )  # user who uploads event
     pk = BigAutoField(
         primary_key=True
@@ -71,6 +71,10 @@ class User(Model):
     last_seen_event_pk = IntegerField(
         default=0
     )  # obvious
+
+    chat_status = IntegerField(
+
+    )  # user chat status
 
     class Meta:
         database = db

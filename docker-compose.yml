@@ -11,7 +11,7 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    command: python src/main.py
+    command: bash -c "./start.sh"
     volumes:
       - .:/bot
     ports:

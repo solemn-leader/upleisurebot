@@ -73,7 +73,8 @@ def __get_user_info(user_id) -> (str, str, int):
     user = API.method(
         'users.get',
         {
-            'user_ids': user_id
+            'user_ids': user_id,
+            'fields': 'city, bdate'
         }
     )[0]
     name = user['first_name'] + ' ' + user['last_name']
@@ -106,11 +107,12 @@ def __get_chat_status(user_id) -> int:
     if User.select().where(User.user_id == user_id).exists():
         return User.get(User.user_id == user_id).chat_status
     else:
-        user_date = __get_user_info(user_id)
-        if ('' in user_date) or (-1 in user_date):
+        name, city, age = __get_user_info(user_id)
+        if ('' == city) or (-1 == age):  # user has no age or city
             return ChatStatuses.USER_MUST_SET_CITY_OR_AGE
-        __create_new_user(user_id, *__get_user_info(user_id))
-        return ChatStatuses.JUST_STARTED
+        else:
+            __create_new_user(user_id, name, city, age)
+            return ChatStatuses.JUST_STARTED
 
 
 def __set_chat_status(user_id, new_status: int):
@@ -126,7 +128,7 @@ def __create_new_user(user_id, name, city, age) -> User:
     return User.create(
         user_id=user_id,
         name=name,
-        # user at once selects what to do JUST_STARTED is never set
+        # user at once selects what to do, JUST_STARTED is never set
         chat_status=ChatStatuses.SELECTS_WHAT_TO_DO,
         city=city,
         age_group=AgeGroups.get_age_group(age)
@@ -182,7 +184,8 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
     messages.append((response_text, attachments))
 
     # if user reply was valid, it was not first message and
-    # his profile is valid we might also want to send some more messages
+    # his profile is valid we might also set new chat status
+    # and send some more messages
     if (response_text != DID_NOT_GET_IT_MESSAGE) and \
        (chat_status != ChatStatuses.JUST_STARTED) and \
        (chat_status != ChatStatuses.USER_MUST_SET_CITY_OR_AGE):
@@ -192,7 +195,7 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
             # we check if there is no passed event
             if response_text == NO_EVENTS_MESSAGE:
                 # set SELECT WHAT TO DO status and send choices in such case
-                new_chat_status == ChatStatuses.SELECTS_WHAT_TO_DO
+                new_chat_status = ChatStatuses.SELECTS_WHAT_TO_DO
                 messages.append((SELECT_WHAT_TO_DO_CHOICES_MESSAGE, ''))
 
             else:
@@ -201,7 +204,6 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
 
         elif new_chat_status == ChatStatuses.SELECTS_WHAT_TO_DO:
             messages.append((SELECT_WHAT_TO_DO_CHOICES_MESSAGE, ''))
-
         __set_chat_status(event.user_id, new_chat_status)
 
     return messages
