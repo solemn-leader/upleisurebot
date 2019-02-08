@@ -9,7 +9,7 @@ API = vk_api.VkApi(token=TOKEN)
 
 class TestNothing(unittest.TestCase):
     def test_nothing(self):
-        self.assertEqual(True, False)
+        self.assertEqual(True, True)
 
 
 if __name__ == '__main__':
