@@ -1,8 +1,10 @@
-from access_token import TOKEN
-import vk_api
-import unittest
-from consts import MY_ID
 import random
+import unittest
+
+import vk_api
+
+from access_token import TOKEN
+from consts import MY_ID
 
 API = vk_api.VkApi(token=TOKEN)
 

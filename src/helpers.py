@@ -1,15 +1,12 @@
 import random
-from dateutil import parser
 from datetime import date, datetime
-from models import User, TeenEvent, YoungEvent
-from consts import (
-    AgeGroups,
-    N_OF_TIME_EVENT_REMAINS_ACTIVE,
-    SORRY_EVENT_EXPIRED_MESSAGE,
-    YOU_LIKED_EVENT_MESSAGE,
-    NO_EVENTS_MESSAGE
-)
+
 from dateutil import parser
+
+from consts import (N_OF_TIME_EVENT_REMAINS_ACTIVE, NO_EVENTS_MESSAGE,
+                    SORRY_EVENT_EXPIRED_MESSAGE, YOU_LIKED_EVENT_MESSAGE,
+                    AgeGroups)
+from models import TeenEvent, User, YoungEvent
 
 
 def get_random_id() -> str:

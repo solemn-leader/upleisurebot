@@ -1,8 +1,6 @@
 from consts import *
-from helpers import (
-    get_event_for_user, 
-    user_liked_event_get_response
-)
+from helpers import get_event_for_user, user_liked_event_get_response
+
 
 '''All funcs starting with 'get_rseponse'
 return message, attachments and new chat_status'''

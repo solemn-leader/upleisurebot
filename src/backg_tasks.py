@@ -1,8 +1,9 @@
 import threading
 import time
 from datetime import datetime
-from models import TeenEvent, YoungEvent
+
 from consts import N_OF_TIME_EVENT_REMAINS_UNDELETED
+from models import TeenEvent, YoungEvent
 
 
 class DBCleanUp(object):

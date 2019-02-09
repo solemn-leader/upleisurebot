@@ -1,14 +1,12 @@
 # this file describes basic models for  bot to use
-from db import db
-from playhouse.postgres_ext import *
 import os
-from consts import (
-    ChatStatuses,
-    EVENT_DESCRIPTION_MAX_LENGTH, 
-    EVENT_ATTACHMENTS_MAX_LENGTH,
-    AgeGroups
-)
 from datetime import datetime
+
+from playhouse.postgres_ext import *
+
+from consts import (EVENT_ATTACHMENTS_MAX_LENGTH, EVENT_DESCRIPTION_MAX_LENGTH,
+                    AgeGroups, ChatStatuses)
+from db import db
 
 
 class Event(Model):

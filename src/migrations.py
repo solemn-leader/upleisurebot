@@ -1,6 +1,7 @@
 '''this file is responsible for
 altering db tables'''
 from playhouse.migrate import *
+
 from db import db
 
 migrator = PostgresqlMigrator(db)

@@ -1,6 +1,7 @@
 import os
-from playhouse.postgres_ext import PostgresqlExtDatabase
+
 from playhouse.db_url import connect
+from playhouse.postgres_ext import PostgresqlExtDatabase
 
 if os.environ.get("DEPLOYED_LOCALLY", False):
     db = PostgresqlExtDatabase(

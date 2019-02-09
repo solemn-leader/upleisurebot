@@ -1,11 +1,13 @@
 import random
-from models import User, TeenEvent, YoungEvent
-from vk_api.longpoll import VkEventType, Event
-from access_token import TOKEN
+
 import vk_api
+from vk_api.longpoll import Event, VkEventType
+
+from access_token import TOKEN
 from consts import *
 from get_response import *
 from helpers import *
+from models import TeenEvent, User, YoungEvent
 
 API = vk_api.VkApi(token=TOKEN)
 

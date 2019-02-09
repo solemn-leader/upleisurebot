@@ -1,9 +1,11 @@
-from vk_api.longpoll import VkLongPoll, VkEventType
-from bot import make_bot_response, API
 import os
-from models import create_tables
+
+from vk_api.longpoll import VkEventType, VkLongPoll
+
 from backg_tasks import DBCleanUp
+from bot import API, make_bot_response
 from consts import CLEAN_UP_INTERVAL
+from models import create_tables
 
 
 def main():
