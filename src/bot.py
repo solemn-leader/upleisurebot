@@ -15,7 +15,6 @@ API = vk_api.VkApi(token=TOKEN)
 def __handle_feedback(text, user_id) -> (str, str, str):
     '''return message, attachments and new chat_status
     func is called when user sends feedback'''
-
     if text == '0':  # 0 meand user has canceled
         message = CANCEL_SEND_FEEDBACK_MESSAGE
 
@@ -41,11 +40,10 @@ def __handle_feedback(text, user_id) -> (str, str, str):
 def __handle_sent_event(text, attachments, user_id) -> (str, str, str):
     '''return message, attachments and new chat_status
     func is called when user has sent event'''
-
     if text == '0':  # 0 meand user has canceled
         message = CANCEL_SEND_EVENT_MESSAGE
 
-    elif (len(text) < 6 and attachments == ''):  # event is too small
+    elif (len(text) < 6) and (not attachments):  # event is too small
         message = EVENT_TOO_SMALL_MESSAGE
 
     else:
