@@ -13,5 +13,6 @@ if os.environ.get("DEPLOYED_LOCALLY", False):
     )
 else:
     db = connect(
-        (os.environ.get('DATABASE_URL'))
+        (os.environ.get('DATABASE_URL')),
+        sslmode='require'
     )
