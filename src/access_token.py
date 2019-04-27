@@ -1,2 +1,3 @@
-TOKEN = '80c3006936cf63d38f6622915ea2b0' + \
-                '96852097ff72a29cd0f315427b2f6f1cd2d3c05e02d9a372942fa27'
+import os
+
+TOKEN = os.environ.get('VK_KEY')
