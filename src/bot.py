@@ -30,7 +30,7 @@ def __handle_feedback(text, user_id) -> (str, str, str):
         # send feedback to me
         __write_msg(
             MY_ID,
-            text,
+            "FEEDBACK:\n" + text,
             ''
         )
 

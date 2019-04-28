@@ -44,7 +44,7 @@ def get_event_for_user(user_id) -> (str, str):
         (event_class.city == user.city)  # takes place in user's city
         )
     if event:  # we find such event
-        User.update(last_seen_event_pk=event.pk).where(User.user_id == user_id)
+        User.update(last_seen_event_pk=event.pk).where(User.user_id == user_id).execute()
         return (event.description, event.attachments)
     else:  # no events to show
         return (NO_EVENTS_MESSAGE, '')
