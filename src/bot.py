@@ -12,6 +12,10 @@ from models import TeenEvent, User, YoungEvent
 API = vk_api.VkApi(token=TOKEN)
 
 
+def everyone_allowed(list_of_all_users):
+    return (len(list_of_all_users) != 0) and list_of_all_users[0] == 1
+
+
 def __handle_feedback(text, user_id) -> (str, str, str):
     '''return message, attachments and new chat_status
     func is called when user sends feedback'''
@@ -212,7 +216,8 @@ def __what_should_bot_respond(event: Event) -> [(str, str), (str, str)]:
 
 def make_bot_response(event: Event):
     '''this function makes bot respond!'''
-    if event.user_id in PEOPLE_WHO_ARE_ALLOWED_TO_WRITE:
+    if everyone_allowed(PEOPLE_WHO_ARE_ALLOWED_TO_WRITE) or \
+        (event.user_id in PEOPLE_WHO_ARE_ALLOWED_TO_WRITE):
         for text, attachments in __what_should_bot_respond(event):
             __write_msg(
                 event.user_id,

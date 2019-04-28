@@ -28,10 +28,10 @@ class AgeGroups:
         else:
             return AgeGroups.YOUNG
 
-
 PEOPLE_WHO_ARE_ALLOWED_TO_WRITE = [
-    210045485
-]
+    1
+    # 210045485 - main developer vk id
+]  # if first elem is 1 - everyone is allowed
 
 MY_ID = 210045485
 
