@@ -9,6 +9,20 @@ from consts import (N_OF_TIME_EVENT_REMAINS_ACTIVE, NO_EVENTS_MESSAGE,
 from models import TeenEvent, User, YoungEvent
 
 
+def att_dict_to_str(dic):
+    ans = ''
+    temp = ''
+    for key in dic.keys():
+        if key[-4:] == 'type':
+            temp = dic[key]
+        else:
+            temp += '-' + dic[key]
+            ans += temp + ','
+    if len(ans):
+        return ans[:-1]
+    return ans
+
+
 def get_random_id() -> str:
     # random id for message
     return random.getrandbits(31) * random.choice([-1, 1])

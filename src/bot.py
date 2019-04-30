@@ -60,8 +60,8 @@ def __handle_sent_event(text, attachments, user_id) -> (str, str, str):
             event_class = YoungEvent
         event_class.create(
             city=user.city,
-            description=text,
-            attachments=attachments,
+            description=text[:EVENT_DESCRIPTION_MAX_LENGTH],
+            attachments=att_dict_to_str(attachments),
             owner=user
         )
 
@@ -93,8 +93,9 @@ def __get_user_info(user_id) -> (str, str, int):
     return (name, city, age)
 
 
-def __write_msg(user_id, text, attachments='photo-36147615_456275469'):
+def __write_msg(user_id, text, attachments=''):
     '''sends message to user with vk id = user_id'''
+    print(attachments)
     API.method(
         'messages.send',
         {

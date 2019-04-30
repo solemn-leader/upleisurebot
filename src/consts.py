@@ -117,11 +117,12 @@ SELECT_WHAT_TO_DO_CHOICES_MESSAGE = 'Что будем делать?\n' + '\n'.j
      for key, value in SELECT_WHAT_TO_DO_CHOICES.items()]
 )
 
-CLEAN_UP_INTERVAL = 60 * 30  # in seconds
 
 EVENT_DESCRIPTION_MAX_LENGTH = 300
 
 EVENT_ATTACHMENTS_MAX_LENGTH = 400
+
+CLEAN_UP_INTERVAL = 60 * 30  # in seconds
 
 N_OF_TIME_EVENT_REMAINS_ACTIVE = datetime.timedelta(
     days=4, hours=23, minutes=30
