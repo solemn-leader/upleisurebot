@@ -1,4 +1,4 @@
-![whatever](https://sun9-67.userapi.com/c855620/v855620152/32214/CXw58ufK6mw.jpg "Logo Title Text 1")
+![whatever](https://sun9-67.userapi.com/c855620/v855620152/32214/CXw58ufK6mw.jpg "Upleisure")
 # upleisurebot
 Source code for [VK](vk.com) bot for upleisure project.
 # What is upleisure?
